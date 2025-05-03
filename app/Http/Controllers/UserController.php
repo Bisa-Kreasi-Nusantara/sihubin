@@ -7,14 +7,27 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Role;
 
+use Hash;
+use Auth;
+
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('role')->get();
+        $users = User::query()->with('role');
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $users->where(function($query) use ($search) {
+                $query->where('fullname', 'like', '%' . $search . '%')
+                      ->orWhere('email', 'like', '%' . $search . '%');
+            });
+        }
+
+        $users = $users->get();
         return view('users-management.index', compact('users'));
     }
 
@@ -32,7 +45,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->merge([
+                'password' => Hash::make($request->password),
+                'created_by' => Auth::user()->id,
+            ]);
+
+            User::create($request->all());
+
+            return redirect()->route('users-management.index')->withSuccess("Success create new user");
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -40,7 +65,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // 
     }
 
     /**
@@ -48,7 +73,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $user = User::with('role')->find($id);
+        $roles = Role::all();
+        return view('users-management.edit', compact('roles', 'user'));
     }
 
     /**
@@ -56,7 +83,20 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $user = User::with('role')->find($id);
+
+            if ($request->has('password')) {
+                $request->merge(['password' => Hash::make($request->password)]);
+            }
+    
+            $request->merge(['updated_by' => Auth::user()->id]);
+            $user->update($request->all());
+
+            return redirect()->route('users-management.edit', $id)->withSuccess("Success update user");
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 
     /**
@@ -64,6 +104,11 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $user = User::find($id)->delete();
+            return redirect()->route('users-management.index')->withSuccess("Success delete user");
+        } catch (\Throwable $th) {
+            throw $th;
+        }
     }
 }

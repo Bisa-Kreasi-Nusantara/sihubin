@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\StudentController;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -20,4 +21,9 @@ Route::middleware('auth')->group(function () {
 
     // User Management
     Route::resource('users-management', UserController::class);
+    Route::get('users-management/{id}/delete', [UserController::class, 'destroy'])->name('users-management.delete');
+
+    // Student Management
+    Route::resource('students-management', StudentController::class);
+    Route::get('students-management/{id}/delete', [StudentController::class, 'destroy'])->name('students-management.delete');
 });

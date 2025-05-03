@@ -59,10 +59,89 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
 
     <script defer src="{{ asset('assets/js/bundle.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.delete-button');
+      
+            deleteButtons.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault(); 
+      
+                    const url = btn.getAttribute('data-url');
+      
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "This action cannot be undone.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            });
+        });
+
         feather.replace();
     </script>
+
+    @if(session('success'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'success',
+            title: @json(session('success')),
+            text: @json(session('message') ?? ''),
+            text: @json(session('message') ?? ''),
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'error',
+            title: @json(session('error')),
+            text: @json(session('message') ?? ''),
+            text: @json(session('message') ?? ''),
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+    </script>
+    @endif
+
+    @if(session('warning'))
+    <script>
+        Swal.fire({
+            toast: true,
+            position: 'bottom-end',
+            icon: 'warning',
+            title: @json(session('warning')),
+            text: @json(session('message') ?? ''),
+            text: @json(session('message') ?? ''),
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+        });
+    </script>
+    @endif
+
+    @stack('scripts')
+
 </body>
 
 </html>
