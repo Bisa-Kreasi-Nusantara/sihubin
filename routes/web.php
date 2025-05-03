@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\MajorController;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -26,4 +27,8 @@ Route::middleware('auth')->group(function () {
     // Student Management
     Route::resource('students-management', StudentController::class);
     Route::get('students-management/{id}/delete', [StudentController::class, 'destroy'])->name('students-management.delete');
+    
+    // Major Management
+    Route::resource('majors-management', MajorController::class);
+    Route::get('majors-management/{id}/delete', [MajorController::class, 'destroy'])->name('majors-management.delete');
 });

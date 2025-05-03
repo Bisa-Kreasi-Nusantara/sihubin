@@ -104,10 +104,26 @@
 
                 <ul class="flex flex-col gap-4 mb-6">
                     <li>
-                        <a href="{{ route('users-management.index') }}" class="menu-item group menu-item-inactive">
+                        <a href="{{ route('users-management.index') }}" class="menu-item group {{Request::is('users-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="users"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Users Management
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('students-management.index') }}" class="menu-item group {{Request::is('students-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
+                            <i data-feather="user"></i>
+                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Students Management
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('majors-management.index') }}" class="menu-item group {{Request::is('majors-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
+                            <i data-feather="box"></i>
+                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Majors Management
                             </span>
                         </a>
                     </li>
@@ -116,14 +132,6 @@
                             <i data-feather="grid"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Companies Management
-                            </span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('students-management.index') }}" class="menu-item group menu-item-inactive">
-                            <i data-feather="user"></i>
-                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
-                                Students Management
                             </span>
                         </a>
                     </li>
