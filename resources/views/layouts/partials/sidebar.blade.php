@@ -128,7 +128,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{route('companies-management.index')}}" class="menu-item group {{Request::is('companies-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="grid"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Companies Management

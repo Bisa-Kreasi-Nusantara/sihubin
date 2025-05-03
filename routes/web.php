@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MajorController;
+use App\Http\Controllers\CompanyController;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -31,4 +32,8 @@ Route::middleware('auth')->group(function () {
     // Major Management
     Route::resource('majors-management', MajorController::class);
     Route::get('majors-management/{id}/delete', [MajorController::class, 'destroy'])->name('majors-management.delete');
+    
+    // companies Management
+    Route::resource('companies-management', CompanyController::class);
+    Route::get('companies-management/{id}/delete', [CompanyController::class, 'destroy'])->name('companies-management.delete');
 });
