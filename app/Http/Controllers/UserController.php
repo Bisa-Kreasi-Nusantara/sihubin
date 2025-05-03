@@ -17,7 +17,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $users = User::query()->with('role');
+        $users = User::query()->with('role')->whereNot('roles_id', 3);
 
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
@@ -36,7 +36,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $roles = Role::all();
+        $roles = Role::whereNot('id', 3)->get();
         return view('users-management.create', compact('roles'));
     }
 
@@ -61,20 +61,12 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // 
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
         $user = User::with('role')->find($id);
-        $roles = Role::all();
+        $roles = Role::whereNot('id', 3)->get();
         return view('users-management.edit', compact('roles', 'user'));
     }
 

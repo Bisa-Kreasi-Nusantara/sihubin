@@ -9,7 +9,7 @@
     <title>
         {{ env('APP_NAME', 'Laravel') }} &mdash; @yield('title', 'Home')
     </title>
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="{{asset('favicon.ico')}}">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 </head>
 

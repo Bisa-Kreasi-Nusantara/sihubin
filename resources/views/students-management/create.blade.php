@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'Create new users-management')
+@section('title', 'Create new students-management')
 
 @section('content')
     <!-- Breadcrumb Start -->
-    <div x-data="{ pageName: `Users Management` }">
+    <div x-data="{ pageName: `Students Management` }">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90" x-text="pageName"></h2>
 
@@ -37,7 +37,7 @@
     <!-- Breadcrumb End -->
 
     <div class="rounded-2xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
-        <form action="{{ route('users-management.store') }}" method="POST" enctype="multipart/form-data" class="w-full">
+        <form action="{{ route('students-management.store') }}" method="POST" enctype="multipart/form-data" class="w-full">
             @csrf
             <div class="border-t border-gray-100 p-4 dark:border-gray-800 sm:p-6">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -51,7 +51,47 @@
                             autocomplete="fullname"
                             name="fullname" />
                     </div>
-    
+
+                    <!-- nis -->
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            NIS
+                        </label>
+                        <input type="number"
+                            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                            autocomplete="nis"
+                            name="nis" />
+                    </div>
+
+                    <!-- avg. scores -->
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Avg. Scores
+                        </label>
+                        <input type="number"
+                        min="0" 
+                            max="100"
+                            step="0.01" 
+                            inputmode="decimal"
+                            pattern="\d+(\.\d{1,2})?"
+                            placeholder="e.g. 75.50"
+                            title="Please use dot (.) as decimal separator"
+                            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                            autocomplete="avg_scores" 
+                            name="avg_scores" />
+                    </div>
+
+                    <!-- address -->
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Address
+                        </label>
+                        <input type="text"
+                            class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                            autocomplete="address" 
+                            name="address" />
+                    </div>
+
                     <!-- Email -->
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
@@ -77,15 +117,16 @@
                     <!-- Select Input -->
                     <div>
                         <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                            Select Input
+                            Select Major
                         </label>
                         <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                             <select
                                 class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
                                 :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
-                                @change="isOptionSelected = true" name="roles_id">
+                                @change="isOptionSelected = true" 
+                                name="majors_id">
                                 <option class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" selected disabled>Select Option</option>
-                                @foreach ($roles as $item)
+                                @foreach ($majors as $item)
                                     <option value="{{$item->id}}" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">{{$item->name}}</option>
                                 @endforeach
                             </select>

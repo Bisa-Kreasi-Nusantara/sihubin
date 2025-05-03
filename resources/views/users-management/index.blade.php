@@ -98,7 +98,7 @@
 
                 <!-- Table body -->
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                    @foreach ($users as $row)
+                    @forelse ($users as $row)
                         <tr>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
@@ -150,7 +150,15 @@
                                 </div>
                             </td>
                         </tr>
-                    @endforeach
+                      @empty
+                        <tr>
+                            <td class="px-5 py-4 sm:px-6" colspan="7">
+                                <div class="text-center">
+                                    <p class="text-gray-500 font-semibold text-theme-sm dark:text-gray-400">No Data Available.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>

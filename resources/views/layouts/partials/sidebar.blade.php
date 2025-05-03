@@ -120,7 +120,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{ route('students-management.index') }}" class="menu-item group menu-item-inactive">
                             <i data-feather="user"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Students Management
