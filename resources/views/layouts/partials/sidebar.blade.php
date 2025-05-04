@@ -136,7 +136,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{route('criteria-weight-management.index')}}" class="menu-item group {{Request::is('criteria-weight-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="sliders"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Criteria Weight Management

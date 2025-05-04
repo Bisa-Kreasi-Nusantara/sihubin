@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 'companies-management')
+@section('title', 'criteria-weight-management')
 
 @section('content')
     <!-- Breadcrumb Start -->
-    <div x-data="{ pageName: `Company Management` }">
+    <div x-data="{ pageName: `Criteria Weight Management` }">
         <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white/90" x-text="pageName"></h2>
 
@@ -33,19 +33,19 @@
 
         <div class="flex items-center justify-between px-6 py-4">
           <!-- Search Form -->
-          <form action="{{ route('companies-management.index') }}" class="w-96">
+          <form action="{{ route('criteria-weight-management.index') }}" class="w-96">
               <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                   Search
               </label>
               <input type="text"
                   name="search"
-                  placeholder="Search company..."
+                  placeholder="Search criteria weight..."
                   value="{{request()->search}}"
                   class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
           </form>
       
           <!-- Create Button -->
-          <a href="{{ route('companies-management.create') }}"
+          <a href="{{ route('criteria-weight-management.create') }}"
               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
               <i data-feather="plus"></i>
               Create New
@@ -65,32 +65,17 @@
                         </th>
                         <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Company Name</p>
+                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Name</p>
                             </div>
                         </th>
                         <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Address</p>
+                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Weight Value</p>
                             </div>
                         </th>
                         <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Max Capacity</p>
-                            </div>
-                        </th>
-                        <th class="px-5 py-3 sm:px-6">
-                            <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Reputation</p>
-                            </div>
-                        </th>
-                        <th class="px-5 py-3 sm:px-6">
-                            <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Major</p>
-                            </div>
-                        </th>
-                        <th class="px-5 py-3 sm:px-6">
-                            <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Status</p>
+                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Type</p>
                             </div>
                         </th>
                         <th class="px-5 py-3 sm:px-6">
@@ -108,7 +93,7 @@
 
                 <!-- Table body -->
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-800">
-                    @forelse ($companies as $row)
+                    @forelse ($criterias as $row)
                         <tr>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
@@ -122,30 +107,12 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->address }}</p>
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->weight_value }}</p>
                                 </div>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->max_capacity }}</p>
-                                </div>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <div class="flex items-center">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->reputations }}</p>
-                                </div>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <div class="flex items-center">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->major->name }}</p>
-                                </div>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
-                                <div class="flex items-center">
-                                    <p
-                                        class="rounded-full bg-success-50 px-2 py-0.5 text-theme-xs font-medium text-success-700 dark:bg-success-500/15 dark:text-success-500">
-                                        Active
-                                    </p>
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->type }}</p>
                                 </div>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
@@ -157,14 +124,14 @@
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center gap-2">
-                                    <a href="{{ route('companies-management.edit', $row->id) }}"
+                                    <a href="{{ route('criteria-weight-management.edit', $row->id) }}"
                                         class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-warning-500 shadow hover:bg-warning-600">
                                         <i data-feather="edit" class="w-4 h-4"></i>
                                     </a>
-                                    <a href="{{route('companies-management.delete', $row->id)}}" 
+                                    <a href="{{route('criteria-weight-management.delete', $row->id)}}" 
                                         class="delete-button inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-error-500 shadow hover:bg-error-600"
                                         data-id="{{ $row->id }}"
-                                        data-url="{{ route('companies-management.delete', $row->id) }}">
+                                        data-url="{{ route('criteria-weight-management.delete', $row->id) }}">
                                         <i data-feather="trash" class="w-4 h-4"></i>
                                     </a>
                                 </div>

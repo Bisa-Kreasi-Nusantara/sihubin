@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CriteriaWeightController;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', [AuthController::class, 'login'])->name('login');
@@ -33,7 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('majors-management', MajorController::class);
     Route::get('majors-management/{id}/delete', [MajorController::class, 'destroy'])->name('majors-management.delete');
     
-    // companies Management
+    // Companies Management
     Route::resource('companies-management', CompanyController::class);
     Route::get('companies-management/{id}/delete', [CompanyController::class, 'destroy'])->name('companies-management.delete');
+    
+    // Criteria Weight Management
+    Route::resource('criteria-weight-management', CriteriaWeightController::class);
+    Route::get('criteria-weight-management/{id}/delete', [CriteriaWeightController::class, 'destroy'])->name('criteria-weight-management.delete');
 });
