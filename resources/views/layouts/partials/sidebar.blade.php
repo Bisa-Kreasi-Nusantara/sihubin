@@ -47,8 +47,7 @@
                 </h3>
 
                 <ul class="flex flex-col gap-4 mb-6">
-
-                    <!-- Menu Item Dashboard -->
+                    @can('dashboard')
                     <li>
                         <a href="/" class="menu-item group menu-item-inactive">
                             <i data-feather="home"></i>
@@ -57,7 +56,8 @@
                             </span>
                         </a>
                     </li>
-                    <!-- Menu Item Internship Request -->
+                    @endcan
+                    @can('internship_request')    
                     <li>
                         <a href="/" class="menu-item group menu-item-inactive">
                             <i data-feather="clipboard"></i>
@@ -66,6 +66,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('weighing_result')
                     <li>
                         <a href="/" class="menu-item group menu-item-inactive">
                             <i data-feather="sliders"></i>
@@ -74,6 +76,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('internship_schedules')
                     <li>
                         <a href="/" class="menu-item group menu-item-inactive">
                             <i data-feather="calendar"></i>
@@ -82,7 +86,7 @@
                             </span>
                         </a>
                     </li>
-
+                    @endcan
                 </ul>
             </div>
 
@@ -103,6 +107,7 @@
                 </h3>
 
                 <ul class="flex flex-col gap-4 mb-6">
+                    @can('users_management')
                     <li>
                         <a href="{{ route('users-management.index') }}" class="menu-item group {{Request::is('users-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="users"></i>
@@ -111,6 +116,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('student_management')
                     <li>
                         <a href="{{ route('students-management.index') }}" class="menu-item group {{Request::is('students-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="user"></i>
@@ -119,6 +126,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('majors_management')
                     <li>
                         <a href="{{ route('majors-management.index') }}" class="menu-item group {{Request::is('majors-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="box"></i>
@@ -127,6 +136,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('companies_management')   
                     <li>
                         <a href="{{route('companies-management.index')}}" class="menu-item group {{Request::is('companies-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="grid"></i>
@@ -135,6 +146,8 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
+                    @can('criteria_weight_management')
                     <li>
                         <a href="{{route('criteria-weight-management.index')}}" class="menu-item group {{Request::is('criteria-weight-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="sliders"></i>
@@ -143,6 +156,7 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
                 </ul>
             </div>
         </nav>

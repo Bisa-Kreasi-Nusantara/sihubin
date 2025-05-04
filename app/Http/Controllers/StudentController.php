@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 use App\Models\User;
 use App\Models\Student;
@@ -14,6 +15,12 @@ use Hash;
 
 class StudentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:student_management');
+    }
+
     /**
      * Display a listing of the resource.
      */

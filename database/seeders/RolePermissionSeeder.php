@@ -28,6 +28,7 @@ class RolePermissionSeeder extends Seeder
             "companies_management",
             "student_management",
             "criteria_weight_management",
+            "majors_management",
         ];
 
         // Simpan roles
@@ -46,7 +47,7 @@ class RolePermissionSeeder extends Seeder
 
         // Role-permission mapping (contoh)
         $rolePermissions = [
-            'administrator' => ["dashboard", "internship_request", "weighing_result", "internship_schedules", "users_management", "companies_management", "student_management", "criteria_weight_management",],
+            'administrator' => ["dashboard", "internship_request", "weighing_result", "internship_schedules", "users_management", "companies_management", "student_management", "criteria_weight_management", "majors_management"],
             'teacher'       => ["dashboard", "internship_request", "weighing_result", "internship_schedules",],
             'student'       => ["dashboard", "internship_request"],
         ];

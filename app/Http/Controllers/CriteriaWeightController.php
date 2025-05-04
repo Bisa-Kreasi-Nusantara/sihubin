@@ -3,17 +3,34 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 use App\Models\CriteriaWeight;
 
 class CriteriaWeightController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:criteria_weight_management');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $criterias = CriteriaWeight::all();
+        $criterias = CriteriaWeight::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $criterias->where(function($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('type', 'like', '%' . $search . '%');
+            });
+        }
+
+        $criterias = $criterias->get();
+        
         return view('criteria-weight-management.index', compact('criterias'));
     }
 

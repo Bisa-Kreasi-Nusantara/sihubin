@@ -42,9 +42,23 @@ class User extends Authenticatable
         ];
     }
 
-    public function role()
+    /* public function role()
     {
         return $this->hasOne(Role::class, 'id', 'roles_id');
+    } */
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'roles_id', 'id');
+    }
+
+    public function hasPermission($permissionName)
+    {
+        /* return $this->role
+                && $this->role->permissions->contains('name', $permissionName); */
+        return $this->role
+        ? $this->role->permissions()->where('name', $permissionName)->exists()
+        : false;
     }
 
     public function student()

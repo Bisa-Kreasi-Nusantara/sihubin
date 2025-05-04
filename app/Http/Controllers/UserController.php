@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 use App\Models\User;
 use App\Models\Role;
@@ -12,6 +13,12 @@ use Auth;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:users_management');
+    }
+    
     /**
      * Display a listing of the resource.
      */

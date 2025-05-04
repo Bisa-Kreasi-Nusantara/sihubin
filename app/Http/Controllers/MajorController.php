@@ -3,11 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 use App\Models\Major;
 
 class MajorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:majors_management');
+    }
+
     /**
      * Display a listing of the resource.
      */
