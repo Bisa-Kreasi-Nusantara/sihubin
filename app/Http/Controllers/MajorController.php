@@ -11,7 +11,7 @@ class MajorController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:majors_management');
+        $this->middleware('permission:majors_management.view');
     }
 
     /**

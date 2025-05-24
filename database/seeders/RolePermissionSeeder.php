@@ -20,15 +20,49 @@ class RolePermissionSeeder extends Seeder
 
         // Data permission
         $permissions = [
-            "dashboard",
-            "internship_request",
-            "weighing_result",
-            "internship_schedules",
-            "users_management",
-            "companies_management",
-            "student_management",
-            "criteria_weight_management",
-            "majors_management",
+            "dashboard.view",
+
+            "internship_request.view",
+            "internship_request.create",
+            "internship_request.edit",
+            "internship_request.delete",
+            "internship_request.import",
+            "internship_request.export",
+
+            "weighing_result.view",
+            "weighing_result.calculation",
+            "weighing_result.export",
+            "weighing_result.export-all",
+
+            "internship_schedules.view",
+            "internship_schedules.edit",
+            "internship_schedules.export",
+            
+            "users_management.view",
+            "users_management.create",
+            "users_management.edit",
+            "users_management.delete",
+
+            "companies_management.view",
+            "companies_management.create",
+            "companies_management.edit",
+            "companies_management.delete",
+
+            "student_management.view",
+            "student_management.create",
+            "student_management.edit",
+            "student_management.delete",
+            "student_management.import",
+
+            "criteria_weight_management.view",
+            "criteria_weight_management.create",
+            "criteria_weight_management.edit",
+            "criteria_weight_management.delete",
+
+            "majors_management.view",
+            "majors_management.create",
+            "majors_management.edit",
+            "majors_management.delete",
         ];
 
         // Simpan roles
@@ -47,9 +81,60 @@ class RolePermissionSeeder extends Seeder
 
         // Role-permission mapping (contoh)
         $rolePermissions = [
-            'administrator' => ["dashboard", "internship_request", "weighing_result", "internship_schedules", "users_management", "companies_management", "student_management", "criteria_weight_management", "majors_management"],
-            'teacher'       => ["dashboard", "internship_request", "weighing_result", "internship_schedules",],
-            'student'       => ["dashboard", "internship_request"],
+            'administrator' => [
+                "dashboard.view",
+                "internship_request.view",
+                "internship_request.create",
+                "internship_request.edit",
+                "internship_request.delete",
+                "internship_request.import",
+                "internship_request.export",
+                "weighing_result.view",
+                "weighing_result.calculation",
+                "weighing_result.export",
+                "weighing_result.export-all",
+                "internship_schedules.view",
+                "internship_schedules.edit",
+                "internship_schedules.export",
+                "users_management.view",
+                "users_management.create",
+                "users_management.edit",
+                "users_management.delete",
+                "companies_management.view",
+                "companies_management.create",
+                "companies_management.edit",
+                "companies_management.delete",
+                "student_management.view",
+                "student_management.create",
+                "student_management.edit",
+                "student_management.delete",
+                "student_management.import",
+                "criteria_weight_management.view",
+                "criteria_weight_management.create",
+                "criteria_weight_management.edit",
+                "criteria_weight_management.delete",
+                "majors_management.view",
+                "majors_management.create",
+                "majors_management.edit",
+                "majors_management.delete",
+            ],
+            'teacher'       => [
+                "dashboard.view",
+                "internship_request.view",
+                "weighing_result.view",
+                "internship_schedules.view",
+                "student_management.view",
+                "student_management.edit",
+            ],
+            'student'       => [
+                "dashboard.view",
+                "internship_request.view",
+                "internship_request.create",
+                "internship_request.edit",
+                "weighing_result.view",
+                "weighing_result.export",
+                "internship_schedules.view",
+            ],
         ];
 
         // Simpan role_permission

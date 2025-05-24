@@ -9,6 +9,9 @@ use App\Models\User;
 use App\Models\Student;
 use App\Models\Major;
 
+use App\Imports\StudentImport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use DB;
 use Auth;
 use Hash;
@@ -18,7 +21,7 @@ class StudentController extends Controller
 
     public function __construct()
     {
-        $this->middleware('permission:student_management');
+        $this->middleware('permission:student_management.view');
     }
 
     /**
@@ -89,6 +92,29 @@ class StudentController extends Controller
             throw $th;
         }
         return $request->all();
+    }
+
+    public function upload(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            
+            if ($request->has('file')) {
+                // return $request->all();
+
+                Excel::import(new StudentImport, $request->file('file'));
+
+                DB::commit();
+                return back()->withSuccess('Success import students');
+            }
+
+            DB::rollback();
+            return back()->withWarning('Uploaded file is required');
+            
+        } catch (\Throwable $th) {
+            DB::rollback();
+            throw $th;
+        }
     }
 
     /**

@@ -57,13 +57,15 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
     @endif
 
 
-    <script defer src="{{ asset('assets/js/bundle.js') }}"></script>
+    <script defer src="{{ asset('assets/js/bundle-pro.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const deleteButtons = document.querySelectorAll('.delete-button');
+            const actionButtons = document.querySelectorAll('.action-button');
       
             deleteButtons.forEach(function (btn) {
                 btn.addEventListener('click', function (e) {
@@ -79,6 +81,29 @@ $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(valu
                         confirmButtonColor: '#d33',
                         cancelButtonColor: '#6c757d',
                         confirmButtonText: 'Yes, delete it!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = url;
+                        }
+                    });
+                });
+            });
+
+            actionButtons.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.preventDefault(); 
+      
+                    const url = btn.getAttribute('data-url');
+      
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "This action cannot be undone.",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, proccess it!',
                         cancelButtonText: 'Cancel'
                     }).then((result) => {
                         if (result.isConfirmed) {

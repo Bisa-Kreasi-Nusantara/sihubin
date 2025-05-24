@@ -11,7 +11,7 @@ class CriteriaWeightController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:criteria_weight_management');
+        $this->middleware('permission:criteria_weight_management.view');
     }
 
     /**

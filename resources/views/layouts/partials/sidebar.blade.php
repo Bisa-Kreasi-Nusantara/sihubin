@@ -47,9 +47,9 @@
                 </h3>
 
                 <ul class="flex flex-col gap-4 mb-6">
-                    @can('dashboard')
+                    @can('dashboard.view')
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{route('dashboard')}}" class="menu-item group {{Request::is('/') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="home"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Dashboard
@@ -57,9 +57,9 @@
                         </a>
                     </li>
                     @endcan
-                    @can('internship_request')    
+                    @can('internship_request.view')    
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{route('internship-request.index')}}" class="menu-item group {{Request::is('internship-request') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="clipboard"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Internship Request
@@ -67,9 +67,9 @@
                         </a>
                     </li>
                     @endcan
-                    @can('weighing_result')
+                    @can('weighing_result.view')
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{route('weighing-result.index')}}" class="menu-item group  {{Request::is('weighing-result') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="sliders"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Weighing Result
@@ -77,9 +77,9 @@
                         </a>
                     </li>
                     @endcan
-                    @can('internship_schedules')
+                    @can('internship_schedules.view')
                     <li>
-                        <a href="/" class="menu-item group menu-item-inactive">
+                        <a href="{{route('internship-schedule.index')}}" class="menu-item group {{Request::is('internship-schedule') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="calendar"></i>
                             <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
                                 Internship Schedules
@@ -107,7 +107,7 @@
                 </h3>
 
                 <ul class="flex flex-col gap-4 mb-6">
-                    @can('users_management')
+                    @can('users_management.view')
                     <li>
                         <a href="{{ route('users-management.index') }}" class="menu-item group {{Request::is('users-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="users"></i>
@@ -117,7 +117,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('student_management')
+                    @can('student_management.view')
                     <li>
                         <a href="{{ route('students-management.index') }}" class="menu-item group {{Request::is('students-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="user"></i>
@@ -127,7 +127,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('majors_management')
+                    @can('majors_management.view')
                     <li>
                         <a href="{{ route('majors-management.index') }}" class="menu-item group {{Request::is('majors-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="box"></i>
@@ -137,7 +137,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('companies_management')   
+                    @can('companies_management.view')   
                     <li>
                         <a href="{{route('companies-management.index')}}" class="menu-item group {{Request::is('companies-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="grid"></i>
@@ -147,7 +147,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('criteria_weight_management')
+                    @can('criteria_weight_management.view')
                     <li>
                         <a href="{{route('criteria-weight-management.index')}}" class="menu-item group {{Request::is('criteria-weight-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="sliders"></i>

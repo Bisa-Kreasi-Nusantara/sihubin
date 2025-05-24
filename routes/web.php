@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\InternshipRequestController;
+use App\Http\Controllers\WeighingResultController;
+use App\Http\Controllers\InternshipScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MajorController;
@@ -20,25 +23,41 @@ Route::middleware('auth')->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
     
-    Route::get('/', [DashboardController::class, 'index']);
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Internship Request
+    Route::resource('internship-request', InternshipRequestController::class)->except('show');
+    Route::post('internship-request/upload', [InternshipRequestController::class, 'upload'])->name('internship-request.upload');
+    Route::get('internship-request/{id}/download', [InternshipRequestController::class, 'download'])->name('internship-request.download');
+    Route::get('internship-request/{id}/delete', [InternshipRequestController::class, 'destroy'])->name('internship-request.delete');
+
+    // Weighing Result
+    Route::get('weighing-result', [WeighingResultController::class, 'index'])->name('weighing-result.index');
+    Route::get('weighing-result/process-calculation', [WeighingResultController::class, 'process'])->name('weighing-result.process');
+    Route::get('weighing-result/export', [WeighingResultController::class, 'export'])->name('weighing-result.export');
+
+    // Internship Schedule
+    Route::resource('internship-schedule', InternshipScheduleController::class)->except('show');
+    Route::get('internship-schedule/export', [InternshipScheduleController::class, 'export'])->name('internship-schedule.export');
 
     // User Management
-    Route::resource('users-management', UserController::class);
+    Route::resource('users-management', UserController::class)->except('show');
     Route::get('users-management/{id}/delete', [UserController::class, 'destroy'])->name('users-management.delete');
 
     // Student Management
-    Route::resource('students-management', StudentController::class);
+    Route::resource('students-management', StudentController::class)->except('show');
+    Route::post('students-management/upload', [StudentController::class, 'upload'])->name('students-management.upload');
     Route::get('students-management/{id}/delete', [StudentController::class, 'destroy'])->name('students-management.delete');
     
     // Major Management
-    Route::resource('majors-management', MajorController::class);
+    Route::resource('majors-management', MajorController::class)->except('show');
     Route::get('majors-management/{id}/delete', [MajorController::class, 'destroy'])->name('majors-management.delete');
     
     // Companies Management
-    Route::resource('companies-management', CompanyController::class);
+    Route::resource('companies-management', CompanyController::class)->except('show');
     Route::get('companies-management/{id}/delete', [CompanyController::class, 'destroy'])->name('companies-management.delete');
     
     // Criteria Weight Management
-    Route::resource('criteria-weight-management', CriteriaWeightController::class);
+    Route::resource('criteria-weight-management', CriteriaWeightController::class)->except('show');
     Route::get('criteria-weight-management/{id}/delete', [CriteriaWeightController::class, 'destroy'])->name('criteria-weight-management.delete');
 });

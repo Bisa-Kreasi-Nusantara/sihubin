@@ -42,6 +42,8 @@ class AuthController extends Controller
             return redirect()->intended('/');
         }
 
+        return 'Email or Password is incorrect.';
+
         return back()->withErrors(['email' => 'Email or Password is incorrect.'])->withInput();
     }
 

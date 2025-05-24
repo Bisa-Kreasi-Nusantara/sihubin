@@ -14,7 +14,7 @@ class CompanyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('permission:companies_management');
+        $this->middleware('permission:companies_management.view');
     }
 
     /**
