@@ -107,6 +107,14 @@
                 </h3>
 
                 <ul class="flex flex-col gap-4 mb-6">
+                    <li>
+                        <a href="{{route('role-permission.index')}}" class="menu-item group {{Request::is('role-permission') ? 'menu-item-active' : 'menu-item-inactive'}}">
+                            <i data-feather="settings"></i>
+                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Role & Permission
+                            </span>
+                        </a>
+                    </li>
                     @can('users_management.view')
                     <li>
                         <a href="{{ route('users-management.index') }}" class="menu-item group {{Request::is('users-management') ? 'menu-item-active' : 'menu-item-inactive'}}">

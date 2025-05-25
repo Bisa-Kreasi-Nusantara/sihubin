@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\InternshipRequestController;
 use App\Http\Controllers\WeighingResultController;
 use App\Http\Controllers\InternshipScheduleController;
+use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\MajorController;
@@ -39,6 +40,11 @@ Route::middleware('auth')->group(function () {
     // Internship Schedule
     Route::resource('internship-schedule', InternshipScheduleController::class)->except('show');
     Route::get('internship-schedule/export', [InternshipScheduleController::class, 'export'])->name('internship-schedule.export');
+
+    Route::get('role-permission', [RolePermissionController::class, 'index'])->name('role-permission.index');
+    Route::get('role-permission/{id}/edit', [RolePermissionController::class, 'edit'])->name('role-permission.edit');
+    Route::put('role-permission/{id}', [RolePermissionController::class, 'update'])->name('role-permission.update');
+    Route::get('role-permission/{id}/delete', [RolePermissionController::class, 'destroy'])->name('role-permission.delete');
 
     // User Management
     Route::resource('users-management', UserController::class)->except('show');

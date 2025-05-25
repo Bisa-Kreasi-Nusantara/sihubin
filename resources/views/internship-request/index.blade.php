@@ -106,11 +106,13 @@
 
 
                 <!-- Create Button -->
+                @can('internship_request.create')
                 <a href="{{ route('internship-request.create') }}"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
                     <i data-feather="plus"></i>
                     Create New
                 </a>
+                @endcan
             </div>
         </div>
     
