@@ -43,12 +43,7 @@ class StudentImport implements ToCollection, WithHeadingRow, WithChunkReading
             $email      = $row['email'];
             $password   = Hash::make($row['password']);
 
-            $user = User::firstOrCreate(
-            [
-                'fullname' => $fullname,
-                'email'    => $email,
-            ],    
-            [
+            $user = User::create([
                 'roles_id' => $role->id,
                 'fullname' => $fullname,
                 'email'    => $email,

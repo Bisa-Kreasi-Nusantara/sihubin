@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use Validator;
 use Auth;
+use Hash;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -27,7 +29,6 @@ class AuthController extends Controller
 
         $credentials = $request->only(['email', 'password']);
         $remember = $request->has('remember_me');
-
         if(Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
 
@@ -36,13 +37,11 @@ class AuthController extends Controller
             //     Auth::logout();
             //     return redirect()->back()->withErrors(['email' => 'Your account is inactive, please contact administrator']);
             // }
-            $user->save();
+            // $user->save();
 
             $request->session()->regenerate();
             return redirect()->intended('/');
         }
-
-        return 'Email or Password is incorrect.';
 
         return back()->withErrors(['email' => 'Email or Password is incorrect.'])->withInput();
     }
