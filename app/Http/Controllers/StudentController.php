@@ -144,7 +144,7 @@ class StudentController extends Controller
                 'updated_by'    => Auth::user()->id,
             ];
 
-            if ($request->has('password')) {
+            if ($request->password != null) {
                 $userData['password'] = Hash::make($request->password);
             }
 
