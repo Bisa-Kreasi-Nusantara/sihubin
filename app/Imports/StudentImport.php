@@ -41,9 +41,14 @@ class StudentImport implements ToCollection, WithHeadingRow, WithChunkReading
             $avg_scores = $row['avg_scores'];
             $major_id      = $major->id;
             $email      = $row['email'];
-            $password   = Hash::make($row['password']);
+            $password   = Hash::make($row['nis']);
 
-            $user = User::create([
+            $user = User::firstOrCreate(
+            [
+                'fullname' => $fullname,
+                'email'    => $email,
+            ],    
+            [
                 'roles_id' => $role->id,
                 'fullname' => $fullname,
                 'email'    => $email,
