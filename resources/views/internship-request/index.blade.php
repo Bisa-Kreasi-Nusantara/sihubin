@@ -44,17 +44,89 @@
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-white/[0.03]">
 
         <div class="flex items-center justify-between px-6 py-4">
-            <!-- Search Form -->
-            <form action="{{ route('internship-request.index') }}" class="w-96">
-                <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+
+            <div class="flex items-center gap-2">
+                <!-- Search Form -->
+                <form action="{{ route('internship-request.index') }}" class="w-96">
+                    <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                        Search
+                    </label>
+                    <input type="text"
+                        name="search"
+                        placeholder="Type here..."
+                        value="{{ request()->search }}"
+                        class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
+                </form>
+
+                <!-- Filter Form -->
+                <form action="{{ route('internship-request.index') }}" id="filterForm">
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+                        
+                        <div>
+                            <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                                Order By
+                            </label>
+                            <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
+                                <select
+                                    class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                                    :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
+                                    @change="isOptionSelected = true" name="order_by">
+                                    <option class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" selected disabled>Select Option</option>
+                                    <option value="fullname" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'fullname' ? 'selected' : '' }}>Fullname</option>
+                                    <option value="avg_scores" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'avg_scores' ? 'selected' : '' }}>Avg. Scores</option>
+                                    <option value="estimated_distance" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'estimated_distance' ? 'selected' : '' }}>Estimated Distance</option>
+                                    <option value="requested_company" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'requested_company' ? 'selected' : '' }}>Requested Company</option>
+                                    <option value="requested_date" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'requested_date' ? 'selected' : '' }}>Requested Date</option>
+                                </select>
+                                <span
+                                    class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                                    <svg class="stroke-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
+                                <select
+                                    class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                                    :class="isOptionSelected && 'text-gray-800 dark:text-white/90'"
+                                    @change="isOptionSelected = true" name="order_by_type">
+                                    <option value="asc" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by_type == 'asc' ? 'selected' : '' }}>ASC</option>
+                                    <option value="desc" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by_type == 'desc' ? 'selected' : '' }}>DESC</option>
+                                </select>
+                                <span
+                                    class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                                    <svg class="stroke-current" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </form>
+                
+                <button type="button"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 mt-6"
+                    id="filterButton">
+                    <i data-feather="search"></i>
                     Search
-                </label>
-                <input type="text"
-                    name="search"
-                    placeholder="Search user..."
-                    value="{{ request()->search }}"
-                    class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
-            </form>
+                </button>
+                <a href="{{ route('internship-request.index') }}"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-warning-500 shadow-theme-xs hover:bg-warning-600 mt-6">
+                    <i data-feather="trash"></i>
+                    Clear Filter
+                </a>
+                
+            </div>
 
             <!-- Buttons Container -->
             <div class="flex items-center gap-2">
@@ -266,52 +338,15 @@
     </div>
     <!-- ====== Table End -->
 
-    <!-- Import Modal -->
-    {{-- <div id="importModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white dark:bg-gray-800 rounded-lg w-full max-w-md mx-auto p-6 shadow-lg">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-white">Import Internship Data</h2>
-                <button id="closeImportModal" class="text-gray-500 hover:text-gray-800 dark:hover:text-white">
-                    ✕
-                </button>
-            </div>
-
-            <!-- Import Form -->
-            <form action="{{ route('internship-request.create') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-4">
-                    <label for="file" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Upload File (CSV/Excel)</label>
-                    <input type="file" name="file" id="file" accept=".csv, .xlsx, .xls"
-                        class="block w-full border border-gray-300 rounded-md shadow-sm p-2 text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
-                </div>
-
-                <div class="flex justify-end space-x-2">
-                    <button type="button" id="cancelImport"
-                        class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                        class="px-4 py-2 text-sm text-white bg-brand-500 rounded hover:bg-brand-600">
-                        Import
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div> --}}
-
-
 @endsection
 
 @push('scripts')
-{{-- <script>
-    $(document).ready(function () {
-        $('#openImportModal').on('click', function () {
-            $('#importModal').removeClass('hidden').addClass('flex');
-        });
+<script>
 
-        $('#closeImportModal, #cancelImport').on('click', function () {
-            $('#importModal').removeClass('flex').addClass('hidden');
-        });
-    });
-</script> --}}
+    $('#filterButton').click(function() {
+        filterForm = $('#filterForm')
+        filterForm.submit()
+    })
+    
+</script>
 @endpush

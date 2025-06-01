@@ -32,6 +32,8 @@ class InternshipRequestController extends Controller
     {
         $query = InternshipRequest::query()
                     ->join('users', 'internship_requests.users_id', '=', 'users.id')
+                    ->join('students', 'students.users_id', '=', 'users.id')
+                    ->join('companies', 'internship_requests.companies_id', '=', 'companies.id')
                     ->with('user', 'company');
 
         if ($request->has('search')) {
@@ -47,11 +49,43 @@ class InternshipRequestController extends Controller
         }
 
         if (Auth::user()->roles_id == 3) {
-            $query = $query->where('users_id', Auth::user()->id);
+            $query = $query->where('students.users_id', Auth::user()->id);
+        }
+
+        $orderBy = "users.fullname";
+        $orderByType = "asc";
+
+        if ($request->has('order_by') && $request->has('order_by_type')) {
+
+            if (!in_array($request->order_by_type, ['asc', 'desc'])) {
+                abort(403);
+            }
+
+            $orderByType = $request->order_by_type;
+            switch ($request->order_by) {
+                case 'fullname':
+                    $orderBy = "users.fullname";
+                    break;
+                case 'avg_scores':
+                    $orderBy = "students.avg_scores";
+                    break;
+                case 'estimated_distance':
+                    $orderBy = "estimated_distance";
+                    break;
+                case 'requested_company':
+                    $orderBy = "companies.name";
+                    break;
+                case 'requested_date':
+                    $orderBy = "created_at";
+                    break;
+                default:
+                    $orderBy = "users.fullname";
+                    break;
+            }
         }
 
         $internship_requests = $query
-        ->orderBy('users.fullname', 'asc')
+        ->orderBy($orderBy, $orderByType)
         ->select('internship_requests.*')
         ->get();
 

@@ -14,9 +14,11 @@ use App\Models\InternshipSchedule;
 
 use App\Exports\WeighingResultExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use DB;
 use Auth;
+
 
 class WeighingResultController extends Controller
 {
@@ -30,7 +32,7 @@ class WeighingResultController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    /* public function index(Request $request)
     {
         $query = WeighingResult::with(['user', 'company']);
 
@@ -57,7 +59,68 @@ class WeighingResultController extends Controller
             ->get();
 
         return view('weighing-result.index', compact('weighing_results'));
+    } */
+
+    public function index(Request $request)
+    {
+        $query = WeighingResult::query()
+            ->join('users', 'weighing_results.users_id', '=', 'users.id')
+            ->join('companies', 'weighing_results.companies_id', '=', 'companies.id')
+            ->with(['user', 'company']);
+
+        if ($request->has('search')) {
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+                $q->where('users.fullname', 'like', '%' . $search . '%')
+                ->orWhere('companies.name', 'like', '%' . $search . '%');
+            });
+        }
+
+        if (Auth::user()->roles_id == 3) {
+            $query->where('weighing_results.users_id', Auth::user()->id);
+        }
+
+        $orderBy = "users.fullname";
+        $orderByType = "asc";
+
+        if ($request->has('order_by') && $request->has('order_by_type')) {
+            if (!in_array($request->order_by_type, ['asc', 'desc'])) {
+                abort(403);
+            }
+
+            $orderByType = $request->order_by_type;
+
+            switch ($request->order_by) {
+                case 'fullname':
+                    $orderBy = "users.fullname";
+                    break;
+                case 'requested_company':
+                    $orderBy = "companies.name";
+                    break;
+                case 'weighing_scores':
+                    $orderBy = "weighing_results.scores";
+                    break;
+                case 'status':
+                    $orderBy = "weighing_results.status";
+                    break;
+                case 'proceed_date':
+                    $orderBy = "weighing_results.created_at";
+                    break;
+                default:
+                    $orderBy = "users.fullname";
+                    break;
+            }
+        }
+
+        $weighing_results = $query
+            ->orderBy($orderBy, $orderByType)
+            ->select('weighing_results.*')
+            ->get();
+
+        return view('weighing-result.index', compact('weighing_results'));
     }
+
 
     public function process()
     {
@@ -270,5 +333,19 @@ class WeighingResultController extends Controller
     public function export()
     {
         return Excel::download(new WeighingResultExport, 'weighing_result_'.time().'.xlsx');
+    }
+
+    public function download($id)
+    {
+        $weighing_result = WeighingResult::with(['user', 'company'])->findOrFail($id);
+
+        if (Auth::user()->roles_id == 3) {
+            if ($weighing_result->user->id != Auth::user()->id) {
+                return redirect()->route('weighing-result.index')->withWarning('Download document another user is forbidden!');
+            }
+        }
+
+        $pdf = Pdf::loadView('export.weighing-result-pdf', compact('weighing_result'));
+        return $pdf->download('Surat-Keterangan-SPK6449.pdf');
     }
 }

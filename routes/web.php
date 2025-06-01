@@ -34,11 +34,13 @@ Route::middleware('auth')->group(function () {
 
     // Weighing Result
     Route::get('weighing-result', [WeighingResultController::class, 'index'])->name('weighing-result.index');
+    Route::get('weighing-result/{id}/download', [WeighingResultController::class, 'download'])->name('weighing-result.download');
     Route::get('weighing-result/process-calculation', [WeighingResultController::class, 'process'])->name('weighing-result.process');
     Route::get('weighing-result/export', [WeighingResultController::class, 'export'])->name('weighing-result.export');
 
     // Internship Schedule
     Route::resource('internship-schedule', InternshipScheduleController::class)->except('show');
+    Route::get('internship-schedule/{id}/download', [InternshipScheduleController::class, 'download'])->name('internship-schedule.download');
     Route::get('internship-schedule/export', [InternshipScheduleController::class, 'export'])->name('internship-schedule.export');
 
     Route::get('role-permission', [RolePermissionController::class, 'index'])->name('role-permission.index');
