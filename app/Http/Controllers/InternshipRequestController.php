@@ -6,14 +6,17 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use App\Models\InternshipRequest;
+use App\Models\InternshipSchedule;
 use App\Models\User;
 use App\Models\Company;
+use App\Models\UserCompany;
 use App\Models\Student;
 use App\Models\CriteriaWeight;
 use App\Models\WeighingResult;
 
 use App\Imports\InternshipRequestImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 use Auth;
 use DB;
@@ -66,11 +69,14 @@ class InternshipRequestController extends Controller
                 case 'fullname':
                     $orderBy = "users.fullname";
                     break;
-                case 'avg_scores':
-                    $orderBy = "students.avg_scores";
-                    break;
-                case 'estimated_distance':
-                    $orderBy = "estimated_distance";
+                // case 'avg_scores':
+                //     $orderBy = "students.avg_scores";
+                //     break;
+                // case 'estimated_distance':
+                //     $orderBy = "estimated_distance";
+                //     break;
+                case 'weighing_scores':
+                    $orderBy = "weighing_scores";
                     break;
                 case 'requested_company':
                     $orderBy = "companies.name";
@@ -100,7 +106,7 @@ class InternshipRequestController extends Controller
         $users = User::query()->with('student')->where('roles_id', 3);
         $companies = Company::query()
                             ->withCount('users');
-                            
+
 
         if (Auth::user()->roles_id == 3) {
             $users = $users->where('id', Auth::user()->id);
@@ -115,6 +121,12 @@ class InternshipRequestController extends Controller
                             });
 
         return view('internship-request.create', compact('users', 'companies'));
+    }
+
+    public function show($id)
+    {
+        $internship_request = InternshipRequest::with('user', 'company')->findOrFail($id);
+        return view('internship-request.show', compact('internship_request'));
     }
 
     /**
@@ -145,7 +157,7 @@ class InternshipRequestController extends Controller
     {
         DB::beginTransaction();
         try {
-            
+
             if ($request->has('file')) {
 
                 $import = new InternshipRequestImport;
@@ -162,10 +174,57 @@ class InternshipRequestController extends Controller
 
             DB::rollback();
             return back()->withWarning('Uploaded file is required');
-            
+
         } catch (\Throwable $th) {
             DB::rollback();
             throw $th;
+        }
+    }
+
+    public function form(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+
+            $internship_request = InternshipRequest::findOrFail($id);
+            $company = Company::find($internship_request->companies_id);
+
+            if ($request->status == 'approve') {
+                $internship_request->update([
+                    'status' => 'approved',
+                    'notes'  => $request->notes,
+                ]);
+
+                InternshipSchedule::create([
+                    'users_id'      => $internship_request->users_id,
+                    'companies_id'  => $internship_request->companies_id,
+                    'start_date'    => $company->start_date,
+                    'end_date'      => $company->end_date,
+                ]);
+
+                DB::commit();
+                return redirect()->route('internship-request.index')->withSuccess('Success approved internship request');
+            } else if ($request->status == 'reject') {
+                $internship_request->update([
+                    'status' => 'rejected',
+                    'notes'  => $request->notes,
+                ]);
+
+                $user_company = UserCompany::where('users_id', $internship_request->users_id)->where('companies_id', $internship_request->companies_id)->first();
+                if ($user_company) {
+                    $user_company->delete();
+                }
+
+                DB::commit();
+                return redirect()->route('internship-request.index')->withSuccess('Success rejected internship request');
+            } else {
+                DB::rollback();
+                return back()->withError("status is not valid");
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->withError($th->getMessage());
         }
     }
 
@@ -207,10 +266,35 @@ class InternshipRequestController extends Controller
     public function destroy(string $id)
     {
         try {
-            InternshipRequest::find($id)->delete();
+            DB::beginTransaction();
+            $internship_request = InternshipRequest::find($id);
+            $user_company = UserCompany::where('users_id', $internship_request->users_id)->where('companies_id', $internship_request->companies_id)->first();
+
+            if ($user_company) {
+                $user_company->delete();
+            }
+
+            $internship_request->delete();
+
+            DB::commit();
             return redirect()->route('internship-request.index')->withSuccess("Success delete internship request");
         } catch (\Throwable $th) {
+            DB::rollback();
             throw $th;
         }
+    }
+
+    public function download($id)
+    {
+        $internship_request = InternshipRequest::with('user', 'company')->findOrFail($id);
+
+        if (Auth::user()->roles_id == 3) {
+            if ($internship_request->user->id != Auth::user()->id) {
+                return back()->withWarning('Download document another user is forbidden!');
+            }
+        }
+
+        $pdf = Pdf::loadView('export.internship-report-pdf', compact('internship_request'));
+        return $pdf->download('SURAT KETERANGAN HASIL PENGAJUAN PKL - '. $internship_request->user->fullname .'.pdf');
     }
 }

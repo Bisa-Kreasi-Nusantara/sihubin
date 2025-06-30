@@ -24,7 +24,7 @@ class WeighingResult extends Model
     {
         return $this->hasOne(User::class, 'id', 'proceed_by');
     }
-    
+
     public static function generateCode()
     {
         // Ambil kode terakhir yang ada di tabel WeighingResults

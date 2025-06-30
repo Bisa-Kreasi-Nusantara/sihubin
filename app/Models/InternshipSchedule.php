@@ -18,6 +18,11 @@ class InternshipSchedule extends Model
         return $this->hasOne(Company::class, 'id', 'companies_id');
     }
 
+    public function user_company()
+    {
+        return $this->hasMany(User::class, 'id', 'users_id');
+    }
+
     public function acceptedWeighingResult()
     {
         return $this->hasOne(WeighingResult::class, 'users_id', 'users_id')

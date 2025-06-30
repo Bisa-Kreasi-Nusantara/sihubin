@@ -50,7 +50,7 @@
                 <form action="{{ route('internship-schedule.index') }}" id="filterForm">
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-                        
+
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                 Order By
@@ -77,7 +77,7 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-6">
                             <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                                 <select
@@ -101,7 +101,7 @@
                     </div>
 
                 </form>
-                
+
                 <button type="button"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 mt-6"
                     id="filterButton">
@@ -126,7 +126,7 @@
                 </a>
             </div>
         </div>
-    
+
 
         <div class="max-w-full overflow-x-auto">
             <table class="min-w-full">
@@ -153,11 +153,11 @@
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Avg Scores</p>
                             </div>
                         </th>
-                        <th class="px-5 py-3 sm:px-6">
+                        {{-- <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Weighing Scores</p>
                             </div>
-                        </th>
+                        </th> --}}
                         <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Internship Date</p>
@@ -200,11 +200,11 @@
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ round($row->user->student->avg_scores, 2) }}</p>
                                 </div>
                             </td>
-                            <td class="px-5 py-4 sm:px-6">
+                            {{-- <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->acceptedWeighingResult->scores }}</p>
                                 </div>
-                            </td>
+                            </td> --}}
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ date('d M Y', strtotime($row->start_date)) }} - {{ date('d M Y', strtotime($row->end_date)) }}</p>
@@ -320,6 +320,6 @@
         filterForm = $('#filterForm')
         filterForm.submit()
     })
-    
+
 </script>
 @endpush

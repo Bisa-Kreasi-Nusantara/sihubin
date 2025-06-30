@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 use App\Models\InternshipSchedule;
+use App\Models\User;
 
 
 use App\Exports\InternshipScheduleExport;
@@ -152,7 +153,7 @@ class InternshipScheduleController extends Controller
         }
 
 
-        
+
     }
 
     /**
@@ -170,15 +171,47 @@ class InternshipScheduleController extends Controller
 
     public function download($id)
     {
-        $internship_schedule = InternshipSchedule::with('user', 'company', 'acceptedWeighingResult')->findOrFail($id);
+        $internship_schedule = InternshipSchedule::with(['company', 'user'])->findOrFail($id);
+        $companyId = $internship_schedule->companies_id;
 
+        // Ambil semua user yang berada di perusahaan yang sama
+        $users = User::with('student')
+            ->whereIn('id', function ($query) use ($companyId) {
+                $query->select('users_id')
+                    ->from('internship_schedules')
+                    ->where('companies_id', $companyId);
+            })
+            ->get();
+
+        // Tambahkan nilai weighing_scores dari internship_requests
+        $usersWithScores = $users->map(function ($user) use ($companyId) {
+            $request = $user->internshipRequests()
+                ->where('companies_id', $companyId)
+                ->latest()
+                ->first();
+
+            $userArray = $user->toArray();
+            $userArray['weighing_scores'] = $request?->weighing_scores;
+
+            return $userArray;
+        });
+
+        // Validasi role student agar hanya bisa unduh miliknya sendiri
         if (Auth::user()->roles_id == 3) {
-            if ($internship_schedule->user->id != Auth::user()->id) {
-                return redirect()->route('internship-schedule.index')->withWarning('Download document another user is forbidden!');
+            if ($internship_schedule->user->id !== Auth::user()->id) {
+                return redirect()
+                    ->route('internship-schedule.index')
+                    ->withWarning('Download document for another user is forbidden!');
             }
         }
-        
-        $pdf = Pdf::loadView('export.internship-scheduled-pdf', compact('internship_schedule'));
+
+        // Generate PDF
+        $pdf = Pdf::loadView('export.internship-scheduled-pdf', [
+            'internship_schedule' => $internship_schedule,
+            'users' => $usersWithScores,
+        ]);
+
         return $pdf->download('Surat Keterangan PKL.pdf');
     }
+
 }

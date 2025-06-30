@@ -175,7 +175,7 @@ class WeighingResultController extends Controller
                         ->update(['status' => 'weighed']);
 
                     DB::commit();
-                    
+
                     continue;
                 }
 
@@ -263,7 +263,7 @@ class WeighingResultController extends Controller
                     ]);
                     continue;
                 }
-                
+
 
                 if (in_array($userId, $acceptedUsers)) {
                     $result->update([

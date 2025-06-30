@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CompanyRefrenceController;
 use App\Http\Controllers\InternshipRequestController;
 use App\Http\Controllers\WeighingResultController;
 use App\Http\Controllers\InternshipScheduleController;
@@ -23,12 +24,18 @@ Route::middleware('auth')->group(function () {
 
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
-    
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
+    // company-refrences
+    Route::get('company-refrences', [CompanyRefrenceController::class, 'index'])->name('company-refrences.index');
+    Route::post('company-refrences', [CompanyRefrenceController::class, 'show_refrences'])->name('company-refrences.show-refrences');
+    Route::get('company-refrences/request-internship', [CompanyRefrenceController::class, 'request_internship'])->name('company-refrences.request-internship');
+
     // Internship Request
-    Route::resource('internship-request', InternshipRequestController::class)->except('show');
+    Route::resource('internship-request', InternshipRequestController::class);
     Route::post('internship-request/upload', [InternshipRequestController::class, 'upload'])->name('internship-request.upload');
+    Route::post('internship-request/{id}/form', [InternshipRequestController::class, 'form'])->name('internship-request.form');
     Route::get('internship-request/{id}/download', [InternshipRequestController::class, 'download'])->name('internship-request.download');
     Route::get('internship-request/{id}/delete', [InternshipRequestController::class, 'destroy'])->name('internship-request.delete');
 
@@ -40,6 +47,7 @@ Route::middleware('auth')->group(function () {
 
     // Internship Schedule
     Route::resource('internship-schedule', InternshipScheduleController::class)->except('show');
+
     Route::get('internship-schedule/{id}/download', [InternshipScheduleController::class, 'download'])->name('internship-schedule.download');
     Route::get('internship-schedule/export', [InternshipScheduleController::class, 'export'])->name('internship-schedule.export');
 
@@ -56,15 +64,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('students-management', StudentController::class)->except('show');
     Route::post('students-management/upload', [StudentController::class, 'upload'])->name('students-management.upload');
     Route::get('students-management/{id}/delete', [StudentController::class, 'destroy'])->name('students-management.delete');
-    
+
     // Major Management
     Route::resource('majors-management', MajorController::class)->except('show');
     Route::get('majors-management/{id}/delete', [MajorController::class, 'destroy'])->name('majors-management.delete');
-    
+
     // Companies Management
     Route::resource('companies-management', CompanyController::class)->except('show');
     Route::get('companies-management/{id}/delete', [CompanyController::class, 'destroy'])->name('companies-management.delete');
-    
+
     // Criteria Weight Management
     Route::resource('criteria-weight-management', CriteriaWeightController::class)->except('show');
     Route::get('criteria-weight-management/{id}/delete', [CriteriaWeightController::class, 'destroy'])->name('criteria-weight-management.delete');

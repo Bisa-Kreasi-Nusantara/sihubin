@@ -57,7 +57,15 @@
                         </a>
                     </li>
                     @endcan
-                    @can('internship_request.view')    
+                    <li>
+                        <a href="{{route('company-refrences.index')}}" class="menu-item group {{Request::is('company-refrences') ? 'menu-item-active' : 'menu-item-inactive'}}">
+                            <i data-feather="grid"></i>
+                            <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                                Company References
+                            </span>
+                        </a>
+                    </li>
+                    @can('internship_request.view')
                     <li>
                         <a href="{{route('internship-request.index')}}" class="menu-item group {{Request::is('internship-request') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="clipboard"></i>
@@ -67,7 +75,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('weighing_result.view')
+                    {{-- @can('weighing_result.view')
                     <li>
                         <a href="{{route('weighing-result.index')}}" class="menu-item group  {{Request::is('weighing-result') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="sliders"></i>
@@ -76,7 +84,7 @@
                             </span>
                         </a>
                     </li>
-                    @endcan
+                    @endcan --}}
                     @can('internship_schedules.view')
                     <li>
                         <a href="{{route('internship-schedule.index')}}" class="menu-item group {{Request::is('internship-schedule') ? 'menu-item-active' : 'menu-item-inactive'}}">
@@ -145,7 +153,7 @@
                         </a>
                     </li>
                     @endcan
-                    @can('companies_management.view')   
+                    @can('companies_management.view')
                     <li>
                         <a href="{{route('companies-management.index')}}" class="menu-item group {{Request::is('companies-management') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="grid"></i>

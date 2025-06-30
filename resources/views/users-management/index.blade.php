@@ -43,7 +43,7 @@
                   value="{{request()->search}}"
                   class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30" />
           </form>
-      
+
           <!-- Create Button -->
           <a href="{{ route('users-management.create') }}"
               class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
@@ -51,7 +51,7 @@
               Create New
           </a>
       </div>
-    
+
 
         <div class="max-w-full overflow-x-auto">
             <table class="min-w-full">
@@ -141,7 +141,7 @@
                                         class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-warning-500 shadow hover:bg-warning-600">
                                         <i data-feather="edit" class="w-4 h-4"></i>
                                     </a>
-                                    <a href="{{route('users-management.delete', $row->id)}}" 
+                                    <a href="{{route('users-management.delete', $row->id)}}"
                                         class="delete-button inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-error-500 shadow hover:bg-error-600"
                                         data-id="{{ $row->id }}"
                                         data-url="{{ route('users-management.delete', $row->id) }}">

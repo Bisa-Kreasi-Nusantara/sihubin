@@ -20,14 +20,14 @@ class CriteriaWeightSeeder extends Seeder
                 "weight_value"  => 0.4,
                 "type"          => "benefit",
             ],
-            [
-                "name"          => "Jarak",
-                "weight_value"  => 0.2,
-                "type"          => "cost",
-            ],
+            // [
+            //     "name"          => "Jarak",
+            //     "weight_value"  => 0.2,
+            //     "type"          => "cost",
+            // ],
             [
                 "name"          => "Reputasi Industri",
-                "weight_value"  => 3,
+                "weight_value"  => 0.25,
                 "type"          => "benefit",
             ],
             [

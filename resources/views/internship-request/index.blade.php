@@ -62,7 +62,7 @@
                 <form action="{{ route('internship-request.index') }}" id="filterForm">
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
-                        
+
                         <div>
                             <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                                 Order By
@@ -74,8 +74,9 @@
                                     @change="isOptionSelected = true" name="order_by">
                                     <option class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" selected disabled>Select Option</option>
                                     <option value="fullname" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'fullname' ? 'selected' : '' }}>Fullname</option>
-                                    <option value="avg_scores" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'avg_scores' ? 'selected' : '' }}>Avg. Scores</option>
-                                    <option value="estimated_distance" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'estimated_distance' ? 'selected' : '' }}>Estimated Distance</option>
+                                    {{-- <option value="avg_scores" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'avg_scores' ? 'selected' : '' }}>Avg. Scores</option> --}}
+                                    {{-- <option value="estimated_distance" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'estimated_distance' ? 'selected' : '' }}>Estimated Distance</option> --}}
+                                    <option value="weighing_scores" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'weighing_scores' ? 'selected' : '' }}>Weighing Scores</option>
                                     <option value="requested_company" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'requested_company' ? 'selected' : '' }}>Requested Company</option>
                                     <option value="requested_date" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400" {{ request()->order_by == 'requested_date' ? 'selected' : '' }}>Requested Date</option>
                                 </select>
@@ -89,7 +90,7 @@
                                 </span>
                             </div>
                         </div>
-                        
+
                         <div class="mt-6">
                             <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
                                 <select
@@ -113,7 +114,7 @@
                     </div>
 
                 </form>
-                
+
                 <button type="button"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600 mt-6"
                     id="filterButton">
@@ -125,7 +126,7 @@
                     <i data-feather="trash"></i>
                     Clear Filter
                 </a>
-                
+
             </div>
 
             <!-- Buttons Container -->
@@ -143,16 +144,16 @@
                       <div class="modal-close-btn fixed inset-0 h-full w-full bg-gray-400/50 backdrop-blur-[32px]"></div>
                       <div class="flex flex-col px-4 py-4 overflow-y-auto no-scrollbar">
                         <div @click.outside="isModalOpen = false" class="relative w-full max-w-[507px] rounded-3xl bg-white p-6 dark:bg-gray-900 lg:p-10">
-                            
+
                             <form action="{{route('internship-request.upload')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                
+
                                 <h4 class="mb-6 text-lg font-medium text-gray-800 dark:text-white/90"> Import Internship Data </h4>
 
                                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400"> Uploaded File </label>
                                 <input
-                                type="file" 
-                                name="file" 
+                                type="file"
+                                name="file"
                                 accept=".csv, .xlsx, .xls"
                                 class="focus:border-ring-brand-300 shadow-theme-xs focus:file:ring-brand-300 h-11 w-full overflow-hidden rounded-lg border border-gray-300 bg-transparent text-sm text-gray-500 transition-colors file:mr-5 file:border-collapse file:cursor-pointer file:rounded-l-lg file:border-0 file:border-r file:border-solid file:border-gray-200 file:bg-gray-50 file:py-3 file:pr-3 file:pl-3.5 file:text-sm file:text-gray-700 placeholder:text-gray-400 hover:file:bg-gray-100 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400 dark:text-white/90 dark:file:border-gray-800 dark:file:bg-white/[0.03] dark:file:text-gray-400 dark:placeholder:text-gray-400"
                                 />
@@ -187,7 +188,7 @@
                 @endcan
             </div>
         </div>
-    
+
 
         <div class="max-w-full overflow-x-auto">
             <table class="min-w-full">
@@ -204,19 +205,24 @@
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Fullname</p>
                             </div>
                         </th>
-                        <th class="px-5 py-3 sm:px-6">
+                        {{-- <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Avg Scores</p>
                             </div>
-                        </th>
-                        <th class="px-5 py-3 sm:px-6">
+                        </th> --}}
+                        {{-- <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Estimated Distance</p>
+                            </div>
+                        </th> --}}
+                        <th class="px-5 py-3 sm:px-6">
+                            <div class="flex items-center">
+                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Requested Company</p>
                             </div>
                         </th>
                         <th class="px-5 py-3 sm:px-6">
                             <div class="flex items-center">
-                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Requested Company</p>
+                                <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Weighing Scores</p>
                             </div>
                         </th>
                         <th class="px-5 py-3 sm:px-6">
@@ -239,6 +245,13 @@
                                 <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">Action</p>
                             </div>
                         </th>
+                        @can('internship_request.edit')
+                            <th class="px-5 py-3 sm:px-6">
+                                <div class="flex items-center">
+                                    <p class="font-medium text-gray-500 text-theme-xs dark:text-gray-400">#</p>
+                                </div>
+                            </th>
+                        @endcan
                     </tr>
                 </thead>
 
@@ -256,19 +269,24 @@
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->user->fullname }}</p>
                                 </div>
                             </td>
-                            <td class="px-5 py-4 sm:px-6">
+                            {{-- <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ round($row->user->student->avg_scores, 3) }}</p>
                                 </div>
-                            </td>
-                            <td class="px-5 py-4 sm:px-6">
+                            </td> --}}
+                            {{-- <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
                                     <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->estimated_distance }} Km</p>
+                                </div>
+                            </td> --}}
+                            <td class="px-5 py-4 sm:px-6">
+                                <div class="flex items-center">
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->company->name }}</p>
                                 </div>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center">
-                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->company->name }}</p>
+                                    <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ round($row->weighing_scores, 3) }}</p>
                                 </div>
                             </td>
                             <td class="px-5 py-4 sm:px-6">
@@ -278,9 +296,14 @@
                                         class="rounded-full bg-warning-50 px-2 py-0.5 text-theme-xs font-medium text-warning-700 dark:bg-warning-500/15 dark:text-warning-500">
                                         {{ $row->status }}
                                     </p>
-                                    @elseif ($row->status == 'weighed')
+                                    @elseif ($row->status == 'approved')
                                     <p
                                         class="rounded-full bg-success-50 px-2 py-0.5 text-theme-xs font-medium text-success-700 dark:bg-success-500/15 dark:text-success-500">
+                                        {{ $row->status }}
+                                    </p>
+                                    @elseif ($row->status == 'rejected')
+                                    <p
+                                        class="rounded-full bg-error-50 px-2 py-0.5 text-theme-xs font-medium text-error-700 dark:bg-error-500/15 dark:text-error-500">
                                         {{ $row->status }}
                                     </p>
                                     @endif
@@ -303,25 +326,79 @@
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center gap-2">
 
-                                    @if ($row->status == 'pending')
-                                        <a href="{{ route('internship-request.edit', $row->id) }}"
-                                            class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-warning-500 shadow hover:bg-warning-600">
-                                            <i data-feather="edit" class="w-4 h-4"></i>
-                                        </a>
-                                        <a href="{{route('internship-request.delete', $row->id)}}" 
-                                            class="delete-button inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-error-500 shadow hover:bg-error-600"
-                                            data-id="{{ $row->id }}"
-                                            data-url="{{ route('internship-request.delete', $row->id) }}">
-                                            <i data-feather="trash" class="w-4 h-4"></i>
-                                        </a>
-                                    @elseif ($row->status == 'weighed')
-                                        <a href="{{ route('internship-request.download', $row->id) }}"
-                                            class="action-button inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-success-500 shadow hover:bg-success-600">
-                                            <i data-feather="file-text" class="w-4 h-4"></i>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('internship-request.show', $row->id) }}"
+                                        class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-brand-500 shadow hover:bg-brand-600">
+                                        <i data-feather="eye" class="w-4 h-4"></i>
+                                    </a>
+                                    <a href="{{ route('internship-request.download', $row->id) }}"
+                                        data-url="{{ route('internship-request.download', $row->id) }}"
+                                        class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-success-500 shadow hover:bg-success-600">
+                                        <i data-feather="file-text" class="w-4 h-4"></i>
+                                    </a>
                                 </div>
                             </td>
+                            @can('internship_request.edit')
+                                <td class="px-5 py-4 sm:px-6">
+                                    <div class="flex items-center gap-2">
+                                        @if ($row->status == 'pending')
+                                        <form action="{{route('internship-request.form', $row->id)}}" method="POST">
+                                            @csrf
+                                            <div x-data="{ isOptionSelected: false }" class="relative z-20 bg-transparent">
+                                                <select
+                                                class="dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full appearance-none rounded-lg border border-gray-300 bg-transparent bg-none px-4 py-2.5 pr-11 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                                                required
+                                                name="status"
+                                                >
+                                                    <option disabled class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                                        -- Select --
+                                                    </option>
+                                                    <option value="approve" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                                        Approve
+                                                    </option>
+                                                    <option value="reject" class="text-gray-700 dark:bg-gray-900 dark:text-gray-400">
+                                                        Reject
+                                                    </option>
+                                                </select>
+                                                <span class="pointer-events-none absolute top-1/2 right-4 z-30 -translate-y-1/2 text-gray-500 dark:text-gray-400">
+                                                    <svg
+                                                        class="stroke-current"
+                                                        width="20"
+                                                        height="20"
+                                                        viewBox="0 0 20 20"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                    >
+                                                        <path
+                                                        d="M4.79175 7.396L10.0001 12.6043L15.2084 7.396"
+                                                        stroke=""
+                                                        stroke-width="1.5"
+                                                        stroke-linecap="round"
+                                                        stroke-linejoin="round"
+                                                        />
+                                                    </svg>
+                                                </span>
+                                            </div>
+
+                                            <input
+                                                type="text"
+                                                placeholder="Reason"
+                                                name="notes"
+                                                required
+                                                class="mt-3 dark:bg-dark-900 shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 dark:focus:border-brand-800 h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:ring-3 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30"
+                                            />
+
+                                            <button
+                                                type="submit"
+                                                class="mt-3 inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-brand-500 shadow hover:bg-brand-600">
+                                                <i data-feather="check" class="w-4 h-4"></i> Submit
+                                            </button>
+                                        </form>
+                                        @else
+                                            <p class="text-gray-500 text-theme-sm dark:text-gray-400">{{ $row->notes ?? '-' }}</p>
+                                        @endif
+                                    </div>
+                                </td>
+                            @endcan
                         </tr>
                       @empty
                         <tr>
@@ -347,6 +424,6 @@
         filterForm = $('#filterForm')
         filterForm.submit()
     })
-    
+
 </script>
 @endpush

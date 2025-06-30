@@ -46,24 +46,14 @@
 
         <table>
             <tr>
-                <td style="width: 30%;">Nama Lengkap</td>
-                <td style="width: 5%;">:</td>
-                <td>{{$internship_schedule->user->fullname}}</td>
-            </tr>
-            <tr>
                 <td>Perusahaan Tujuan</td>
                 <td>:</td>
                 <td>{{$internship_schedule->company->name}}</td>
             </tr>
             <tr>
-                <td>Nilai Rata-Rata</td>
+                <td>Alamat Perusahaan</td>
                 <td>:</td>
-                <td>{{ round($internship_schedule->user->student->avg_scores, 2) }}</td>
-            </tr>
-            <tr>
-                <td>Skor Penimbangan</td>
-                <td>:</td>
-                <td>{{ $internship_schedule->acceptedWeighingResult->scores }}</td>
+                <td>{{$internship_schedule->company->address}}</td>
             </tr>
             <tr>
                 <td>Waktu PKL</td>
@@ -72,11 +62,41 @@
             </tr>
         </table>
 
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>Nama Siswa</th>
+                    <th>Email</th>
+                    <th>Nilai Rata-Rata</th>
+                    <th>Weighing Scores</th>
+                </tr>
+            </thead>
+            <tbody style="text-align: center;">
+                @foreach ($users as $user)
+                    <tr>
+                        <td>{{$loop->iteration}}</td>
+                        <td>{{$user['fullname']}}</td>
+                        <td>{{$user['email']}}</td>
+                        <td>{{round($user['student']['avg_scores'], 3)}}</td>
+                        <td>{{$user['weighing_scores']}}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
         <p>Demikian surat keterangan ini dibuat untuk digunakan sebagai bukti bahwa yang bersangkutan telah melaksanakan proses pemilihan tempat PKL.</p>
 
         <div class="signature">
+            <p>{{ date('d M Y') }}</p>
             <p>Mengetahui,</p>
-            {{-- <p>Administrator</p> --}}
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <p>___________________</p>
         </div>
     </div>
 
