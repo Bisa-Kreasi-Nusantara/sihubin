@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->integer('users_id');
             $table->integer('companies_id');
-            $table->float('estimated_distance');
             $table->string('status')->default('pending');
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
