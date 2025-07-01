@@ -189,8 +189,8 @@ class CompanyRefrenceController extends Controller
             DB::commit();
             return redirect()->route('internship-request.index')->withSuccess('Success requested intership to selected company.');
         } catch (\Throwable $th) {
-            throw $th;
-            // return back()->withError($th->getMessage());
+            // throw $th;
+            return redirect()->route('company-refrences.index')->withError($th->getMessage());
         }
     }
 }
