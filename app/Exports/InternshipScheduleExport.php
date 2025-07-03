@@ -21,7 +21,6 @@ class InternshipScheduleExport implements FromCollection, WithHeadings
                         $row->user->fullname,
                         $row->company->name,
                         round($row->user->student->avg_scores, 2),
-                        $row->acceptedWeighingResult->scores,
                         date('d M Y', strtotime($row->start_date)) .'-' .date('d M Y', strtotime($row->end_date)),
                         $row->is_finished == true ? 'Finished' : 'Not Finish',
                     ];
@@ -30,6 +29,6 @@ class InternshipScheduleExport implements FromCollection, WithHeadings
 
     public function headings(): array
     {
-        return ["Fullname", "Company", "Avg Scores", "Weighing Scores", "Internship Date", "Status"];
+        return ["Fullname", "Company", "Avg Scores", "Internship Date", "Status"];
     }
 }

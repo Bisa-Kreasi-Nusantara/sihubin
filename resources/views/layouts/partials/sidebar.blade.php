@@ -57,6 +57,7 @@
                         </a>
                     </li>
                     @endcan
+                    @can('company_refrences.view')
                     <li>
                         <a href="{{route('company-refrences.index')}}" class="menu-item group {{Request::is('company-refrences') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="grid"></i>
@@ -65,6 +66,7 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
                     @can('internship_request.view')
                     <li>
                         <a href="{{route('internship-request.index')}}" class="menu-item group {{Request::is('internship-request') ? 'menu-item-active' : 'menu-item-inactive'}}">
@@ -115,6 +117,7 @@
                 </h3>
 
                 <ul class="flex flex-col gap-4 mb-6">
+                    @can('role_permission.view')
                     <li>
                         <a href="{{route('role-permission.index')}}" class="menu-item group {{Request::is('role-permission') ? 'menu-item-active' : 'menu-item-inactive'}}">
                             <i data-feather="settings"></i>
@@ -123,6 +126,7 @@
                             </span>
                         </a>
                     </li>
+                    @endcan
                     @can('users_management.view')
                     <li>
                         <a href="{{ route('users-management.index') }}" class="menu-item group {{Request::is('users-management') ? 'menu-item-active' : 'menu-item-inactive'}}">

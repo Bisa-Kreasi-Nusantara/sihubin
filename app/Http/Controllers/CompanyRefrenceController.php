@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 use App\Models\WeighingResult;
 use App\Models\InternshipRequest;
@@ -17,6 +18,10 @@ use DB;
 
 class CompanyRefrenceController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:company_refrences.view');
+    }
     /**
      * Display a listing of the resource.
      */

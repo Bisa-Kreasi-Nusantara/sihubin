@@ -3,12 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 use App\Models\Role;
 use App\Models\Permission;
 
 class RolePermissionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('permission:role_permission.view');
+    }
+
     public function index()
     {
         $roles = Role::all();

@@ -40,7 +40,7 @@ class AuthController extends Controller
             // $user->save();
 
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/company-refrences');
         }
 
         return back()->withErrors(['email' => 'Email or Password is incorrect.'])->withInput();

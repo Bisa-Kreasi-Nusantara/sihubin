@@ -22,6 +22,8 @@ class RolePermissionSeeder extends Seeder
         $permissions = [
             "dashboard.view",
 
+            "company_refrences.view",
+
             "internship_request.view",
             "internship_request.create",
             "internship_request.edit",
@@ -29,15 +31,10 @@ class RolePermissionSeeder extends Seeder
             "internship_request.import",
             "internship_request.export",
 
-            "weighing_result.view",
-            "weighing_result.calculation",
-            "weighing_result.export",
-            "weighing_result.export-all",
-
             "internship_schedules.view",
             "internship_schedules.edit",
             "internship_schedules.export",
-            
+
             "users_management.view",
             "users_management.create",
             "users_management.edit",
@@ -63,6 +60,11 @@ class RolePermissionSeeder extends Seeder
             "majors_management.create",
             "majors_management.edit",
             "majors_management.delete",
+
+            "role_permission.view",
+            "role_permission.create",
+            "role_permission.edit",
+            "role_permission.delete",
         ];
 
         // Simpan roles
@@ -83,16 +85,13 @@ class RolePermissionSeeder extends Seeder
         $rolePermissions = [
             'administrator' => [
                 "dashboard.view",
+                "company_refrences.view",
                 "internship_request.view",
                 "internship_request.create",
                 "internship_request.edit",
                 "internship_request.delete",
                 "internship_request.import",
                 "internship_request.export",
-                "weighing_result.view",
-                "weighing_result.calculation",
-                "weighing_result.export",
-                "weighing_result.export-all",
                 "internship_schedules.view",
                 "internship_schedules.edit",
                 "internship_schedules.export",
@@ -117,22 +116,25 @@ class RolePermissionSeeder extends Seeder
                 "majors_management.create",
                 "majors_management.edit",
                 "majors_management.delete",
+                "role_permission.view",
+                "role_permission.create",
+                "role_permission.edit",
+                "role_permission.delete",
             ],
             'teacher'       => [
                 "dashboard.view",
+                "company_refrences.view",
                 "internship_request.view",
-                "weighing_result.view",
                 "internship_schedules.view",
                 "student_management.view",
                 "student_management.edit",
             ],
             'student'       => [
                 "dashboard.view",
+                "company_refrences.view",
                 "internship_request.view",
                 "internship_request.create",
                 "internship_request.edit",
-                "weighing_result.view",
-                "weighing_result.export",
                 "internship_schedules.view",
             ],
         ];
