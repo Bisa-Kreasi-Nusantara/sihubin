@@ -30,6 +30,23 @@
                     </div>
                 </div>
                 <!-- Metric Item End -->
+                <!-- Metric Item Start -->
+                <div
+                    class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+                    <div class="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+                        <i data-feather="grid"></i>
+                    </div>
+
+                    <div class="mt-5 flex items-end justify-between">
+                        <div>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Total Companies</span>
+                            <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+                                {{$data['company_count']}}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Metric Item End -->
 
                 <!-- Metric Item Start -->
                 <div
@@ -57,9 +74,9 @@
 
                     <div class="mt-5 flex items-end justify-between">
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Internshipped</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Internshipped Students</span>
                             <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
-                                {{$data['pending_request']}}
+                                {{$data['internship_user_count']}}
                             </h4>
                         </div>
                     </div>
@@ -74,9 +91,9 @@
 
                     <div class="mt-5 flex items-end justify-between">
                         <div>
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Not Internship</span>
+                            <span class="text-sm text-gray-500 dark:text-gray-400">Not Yet Internship</span>
                             <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
-                                {{$data['pending_request']}}
+                                {{$data['not_internship_user_count']}}
                             </h4>
                         </div>
                     </div>
