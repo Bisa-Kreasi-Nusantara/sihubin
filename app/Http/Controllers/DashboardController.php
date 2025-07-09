@@ -10,6 +10,8 @@ use \App\Models\InternshipRequest;
 use \App\Models\InternshipSchedule;
 use \App\Models\Company;
 
+use Auth;
+
 class DashboardController extends Controller
 {
     public function __construct()
@@ -25,6 +27,11 @@ class DashboardController extends Controller
         $internship = InternshipSchedule::query()->where('is_finished', false)->get();
         $users      = Student::whereNotIn('users_id', $internship->pluck('users_id'))->get()->count();
         $companies = Company::get()->count();
+
+        if (Auth::user()->role->name == "student") {
+            $internship_request = $internship_request->where("users_id", Auth::user()->id);
+        }
+
         $data = array(
             'student_count'         => $students,
             'internship_requests'   => $internship_request->orderBy('created_at', 'desc')->limit(5)->get(),

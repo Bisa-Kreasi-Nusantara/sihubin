@@ -118,12 +118,14 @@
 
             <!-- Buttons Container -->
             <div class="flex items-center gap-2">
+                @can('internship_schedules.export')
                 <!-- Create Button -->
                 <a href="{{ route('internship-schedule.export') }}"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-success-500 shadow-theme-xs hover:bg-success-600">
                     <i data-feather="printer"></i>
                     Export Data
                 </a>
+                @endcan()
             </div>
         </div>
 
@@ -228,23 +230,16 @@
                             <td class="px-5 py-4 sm:px-6">
                                 <div class="flex items-center gap-2">
 
-                                    @if (!$row->is_finished)
-                                        @can('internship_schedules.edit')
-                                        <a href="{{ route('internship-schedule.edit', $row->id) }}"
-                                            class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-warning-500 shadow hover:bg-warning-600">
-                                            <i data-feather="edit" class="w-4 h-4"></i>
-                                        </a>
-                                        @endcan
-                                        <a href="{{ route('internship-schedule.download', $row->id) }}"
-                                            class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-success-500 shadow hover:bg-success-600">
-                                            <i data-feather="file-text" class="w-4 h-4"></i>
-                                        </a>
-                                    @else
-                                        <a href="{{ route('internship-schedule.download', $row->id) }}"
-                                            class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-success-500 shadow hover:bg-success-600">
-                                            <i data-feather="file-text" class="w-4 h-4"></i>
-                                        </a>
-                                    @endif
+                                    @can('internship_schedules.edit')
+                                    <a href="{{ route('internship-schedule.edit', $row->id) }}"
+                                        class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-warning-500 shadow hover:bg-warning-600">
+                                        <i data-feather="edit" class="w-4 h-4"></i>
+                                    </a>
+                                    @endcan
+                                    <a href="{{ route('internship-schedule.download', $row->id) }}"
+                                        class="inline-flex items-center gap-2 px-2.5 py-1.5 text-xs font-medium text-white transition rounded-md bg-success-500 shadow hover:bg-success-600">
+                                        <i data-feather="file-text" class="w-4 h-4"></i>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

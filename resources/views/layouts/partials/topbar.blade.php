@@ -81,9 +81,9 @@
             <div class="relative" x-data="{ dropdownOpen: false }" @click.outside="dropdownOpen = false">
                 <a class="flex items-center text-gray-700 dark:text-gray-400" href="#"
                     @click.prevent="dropdownOpen = ! dropdownOpen">
-                    <span class="mr-3 h-11 w-11 overflow-hidden rounded-full">
+                    {{-- <span class="mr-3 h-11 w-11 overflow-hidden rounded-full">
                         <img src="{{ asset('assets/images/user/owner.jpg') }}" alt="User" />
-                    </span>
+                    </span> --}}
 
                     <span class="text-theme-sm mr-1 block font-medium"> {{ Auth::user()->fullname }} </span>
 
@@ -107,7 +107,7 @@
                         </span>
                     </div>
 
-                    <ul class="flex flex-col gap-1 border-b border-gray-200 pt-4 pb-3 dark:border-gray-800">
+                    {{-- <ul class="flex flex-col gap-1 border-b border-gray-200 pt-4 pb-3 dark:border-gray-800">
                         <li>
                             <a href="profile.html"
                                 class="group text-theme-sm flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
@@ -147,7 +147,7 @@
                                 Support
                             </a>
                         </li>
-                    </ul>
+                    </ul> --}}
                     <a href="{{ route('logout') }}"
                         class="group text-theme-sm mt-3 flex items-center gap-3 rounded-lg px-3 py-2 font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-700 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-gray-300">
                         <svg class="fill-gray-500 group-hover:fill-gray-700 dark:group-hover:fill-gray-300"

@@ -133,8 +133,8 @@ class RolePermissionSeeder extends Seeder
                 "dashboard.view",
                 "company_refrences.view",
                 "internship_request.view",
-                "internship_request.create",
-                "internship_request.edit",
+                // "internship_request.create",
+                // "internship_request.edit",
                 "internship_schedules.view",
             ],
         ];
