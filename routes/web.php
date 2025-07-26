@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('company-refrences/request-internship', [CompanyRefrenceController::class, 'request_internship'])->name('company-refrences.request-internship');
 
     // Internship Request
+    Route::get('internship-request/export', [InternshipRequestController::class, 'export'])->name('internship-request.export');
     Route::resource('internship-request', InternshipRequestController::class);
     Route::post('internship-request/upload', [InternshipRequestController::class, 'upload'])->name('internship-request.upload');
     Route::post('internship-request/{id}/form', [InternshipRequestController::class, 'form'])->name('internship-request.form');

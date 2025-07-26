@@ -17,6 +17,7 @@ use App\Models\WeighingResult;
 use App\Imports\InternshipRequestImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\InternshipRequestExport;
 
 use Auth;
 use DB;
@@ -296,5 +297,10 @@ class InternshipRequestController extends Controller
 
         $pdf = Pdf::loadView('export.internship-report-pdf', compact('internship_request'));
         return $pdf->download('SURAT KETERANGAN HASIL PENGAJUAN PKL - '. $internship_request->user->fullname .'.pdf');
+    }
+
+    public function export()
+    {
+        return Excel::download(new InternshipRequestExport, 'internship-request-report-'.time().'.xlsx');
     }
 }
