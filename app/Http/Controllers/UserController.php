@@ -7,6 +7,8 @@ use Illuminate\Routing\Controller;
 
 use App\Models\User;
 use App\Models\Role;
+use App\Models\InternshipRequest;
+use App\Models\InternshipSchedule;
 
 use Hash;
 use Auth;
@@ -18,7 +20,7 @@ class UserController extends Controller
     {
         $this->middleware('permission:users_management.view');
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -88,7 +90,7 @@ class UserController extends Controller
             if ($request->has('password')) {
                 $request->merge(['password' => Hash::make($request->password)]);
             }
-    
+
             $request->merge(['updated_by' => Auth::user()->id]);
             $user->update($request->all());
 
@@ -104,7 +106,17 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         try {
-            $user = User::find($id)->delete();
+            $user = User::findOrFail($id);
+            $internship_requests = InternshipRequest::where('users_id', $user->id)->get();
+            $internship_schedules = InternshipSchedule::where('users_id', $user->id)->get();
+            foreach ($internship_requests as $request) {
+                $request->delete();
+            }
+            foreach ($internship_schedules as $request) {
+                $request->delete();
+            }
+
+            $user->delete();
             return redirect()->route('users-management.index')->withSuccess("Success delete user");
         } catch (\Throwable $th) {
             throw $th;
