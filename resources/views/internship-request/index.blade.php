@@ -177,11 +177,16 @@
                   </div>
                 @endcan --}}
 
-                @can('internship_request.import')
+                @can('internship_request.export')
                 <a href="{{route('internship-request.export')}}"
                     class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-success-500 shadow-theme-xs hover:bg-success-600">
                     <i data-feather="file"></i>
-                    Export Data
+                    Export .xlxs
+                </a>
+                <a href="{{route('internship-request.export-pdf')}}"
+                    class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-white transition rounded-lg bg-error-500 shadow-theme-xs hover:bg-error-600">
+                    <i data-feather="file"></i>
+                    Export .pdf
                 </a>
                 @endcan
 

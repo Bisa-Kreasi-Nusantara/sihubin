@@ -301,6 +301,34 @@ class InternshipRequestController extends Controller
 
     public function export()
     {
-        return Excel::download(new InternshipRequestExport, 'internship-request-report-'.time().'.xlsx');
+        return Excel::download(new InternshipRequestExport, 'Laporan Pengajuan PKL -'.time().'.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $orderBy = "users.fullname";
+        $orderByType = "asc";
+        $internship_request = InternshipRequest::query()
+                    ->join('users', 'internship_requests.users_id', '=', 'users.id')
+                    ->join('students', 'students.users_id', '=', 'users.id')
+                    ->join('companies', 'internship_requests.companies_id', '=', 'companies.id')
+                    ->with('user', 'company')
+                    ->orderBy($orderBy, $orderByType)
+                    ->select('internship_requests.*')
+                    ->get();
+                    // ->map(function ($row) {
+                    //     return [
+                    //         $row->user->fullname,
+                    //         $row->company->name,
+                    //         round($row->user->student->avg_scores, 2),
+                    //         round($row->weighing_scores, 3),
+                    //         $row->status,
+                    //         date('d M Y', strtotime($row->created_at)),
+                    //         $row->notes ?? '-',
+                    //     ];
+                    // });
+
+        $pdf = Pdf::loadView('export.internship-request-pdf', compact('internship_request'));
+        return $pdf->download('LAPORAN PENGAJUAN PKL - '. time() .'.pdf');
     }
 }

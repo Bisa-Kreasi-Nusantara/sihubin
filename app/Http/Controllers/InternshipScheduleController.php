@@ -166,7 +166,25 @@ class InternshipScheduleController extends Controller
 
     public function export()
     {
-        return Excel::download(new InternshipScheduleExport, 'internship-schedule_'.time().'.xlsx');
+        return Excel::download(new InternshipScheduleExport, 'Laporan Siswa Yang Melakukan PKL - '.time().'.xlsx');
+    }
+
+    public function exportPdf()
+    {
+        $internship_schedule =  InternshipSchedule::with('user', 'company', 'acceptedWeighingResult')
+                ->get();
+                // ->map(function ($row) {
+                //     return [
+                //         $row->user->fullname,
+                //         $row->company->name,
+                //         round($row->user->student->avg_scores, 2),
+                //         date('d M Y', strtotime($row->start_date)) .'-' .date('d M Y', strtotime($row->end_date)),
+                //         $row->is_finished == true ? 'Finished' : 'Not Finish',
+                //     ];
+                // });
+
+        $pdf = Pdf::loadView('export.internship-scheduled-export-pdf', compact('internship_schedule'));
+        return $pdf->download('Laporan Siswa yang Melakukan PKL - '. time() .'.pdf');
     }
 
     public function download($id)

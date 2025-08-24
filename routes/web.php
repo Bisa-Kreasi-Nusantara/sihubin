@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
     // Internship Request
     Route::get('internship-request/export', [InternshipRequestController::class, 'export'])->name('internship-request.export');
+    Route::get('internship-request/export-pdf', [InternshipRequestController::class, 'exportPdf'])->name('internship-request.export-pdf');
     Route::resource('internship-request', InternshipRequestController::class);
     Route::post('internship-request/upload', [InternshipRequestController::class, 'upload'])->name('internship-request.upload');
     Route::post('internship-request/{id}/form', [InternshipRequestController::class, 'form'])->name('internship-request.form');
@@ -51,6 +52,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('internship-schedule/{id}/download', [InternshipScheduleController::class, 'download'])->name('internship-schedule.download');
     Route::get('internship-schedule/export', [InternshipScheduleController::class, 'export'])->name('internship-schedule.export');
+    Route::get('internship-schedule/export-pdf', [InternshipScheduleController::class, 'exportPdf'])->name('internship-schedule.export-pdf');
 
     Route::get('role-permission', [RolePermissionController::class, 'index'])->name('role-permission.index');
     Route::get('role-permission/{id}/edit', [RolePermissionController::class, 'edit'])->name('role-permission.edit');
